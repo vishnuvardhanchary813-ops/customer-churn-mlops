@@ -1,0 +1,23 @@
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.git/
+.pytest_cache/
+tests/
+notebooks/
+raw/
+data/
+work/
+outputs/
+artifacts/reports/
+mlruns/
+mlflow.db*
+.env
+
+# Local data and experiment outputs
+.git/
+mlruns/
+.env

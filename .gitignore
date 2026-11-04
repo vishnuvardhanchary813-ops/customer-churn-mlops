@@ -1,0 +1,28 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+work/
+
+# Data and generated artifacts
+raw/*
+data/raw/*
+!data/raw/.gitkeep
+data/interim/*
+!data/interim/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+artifacts/model/*
+!artifacts/model/.gitkeep
+!artifacts/model/model.joblib
+artifacts/reports/*
+!artifacts/reports/.gitkeep
+
+# Local tracking and secrets
+mlruns/
+mlflow.db
+mlflow.db-shm
+mlflow.db-wal
+.env

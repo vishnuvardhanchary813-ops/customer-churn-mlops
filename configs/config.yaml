@@ -1,0 +1,9 @@
+# Shared project settings. Paths are relative to the repository root.
+paths:
+  raw_data: raw/dataset.csv
+  processed_dir: data/processed
+  model: artifacts/model/model.joblib
+  reports_dir: artifacts/reports
+
+random_state: 42
+
