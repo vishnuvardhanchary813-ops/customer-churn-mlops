@@ -1,2 +1,40 @@
-# Pipeline stages will be added when preprocessing and training commands are implemented.
-stages: {}
+stages:
+  preprocess:
+    cmd: python -m src.data.preprocess
+    deps:
+      - raw/dataset.csv
+      - src/data/preprocess.py
+      - configs/config.yaml
+    params:
+      - params.yaml:
+          - random_state
+          - test_size
+    outs:
+      - data/processed/train.csv
+      - data/processed/test.csv
+
+  train:
+    cmd: python -m src.models.train
+    deps:
+      - data/processed/train.csv
+      - src/models/train.py
+      - src/features/build_features.py
+      - configs/config.yaml
+    params:
+      - params.yaml:
+          - random_state
+          - validation_size
+    metrics:
+      - artifacts/reports/training_summary.json:
+          cache: false
+
+  evaluate:
+    cmd: python -m src.models.evaluate
+    deps:
+      - data/processed/test.csv
+      - artifacts/model/model.joblib
+      - src/models/evaluate.py
+      - configs/config.yaml
+    metrics:
+      - artifacts/reports/test_metrics.json:
+          cache: false

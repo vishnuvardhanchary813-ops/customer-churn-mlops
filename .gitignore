@@ -7,7 +7,7 @@ __pycache__/
 work/
 
 # Data and generated artifacts
-raw/*
+raw/dataset.csv
 data/raw/*
 !data/raw/.gitkeep
 data/interim/*
@@ -19,6 +19,8 @@ artifacts/model/*
 !artifacts/model/model.joblib
 artifacts/reports/*
 !artifacts/reports/.gitkeep
+!artifacts/reports/training_summary.json
+!artifacts/reports/test_metrics.json
 
 # Local tracking and secrets
 mlruns/

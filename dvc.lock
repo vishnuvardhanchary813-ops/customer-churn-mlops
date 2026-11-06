@@ -1,0 +1,82 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python -m src.data.preprocess
+    deps:
+    - path: configs/config.yaml
+      hash: md5
+      md5: 891ae1fb99413ed11af2a3a4962eaad5
+      size: 229
+    - path: raw/dataset.csv
+      hash: md5
+      md5: 0f9de68e012bd3aed5fa7cdc9fc421af
+      size: 977501
+    - path: src/data/preprocess.py
+      hash: md5
+      md5: e1f9879ee5e853eb7f690da6ffb09a3f
+      size: 4044
+    params:
+      params.yaml:
+        random_state: 42
+        test_size: 0.2
+    outs:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: ac020a37d10b95fa0d00b6d748866378
+      size: 178930
+    - path: data/processed/train.csv
+      hash: md5
+      md5: fe26dee9f314acb62fa4c23bbf38009a
+      size: 713846
+  train:
+    cmd: python -m src.models.train
+    deps:
+    - path: configs/config.yaml
+      hash: md5
+      md5: 891ae1fb99413ed11af2a3a4962eaad5
+      size: 229
+    - path: data/processed/train.csv
+      hash: md5
+      md5: fe26dee9f314acb62fa4c23bbf38009a
+      size: 713846
+    - path: src/features/build_features.py
+      hash: md5
+      md5: a87f4ecc4576384f0d1bcc1668dc377a
+      size: 1312
+    - path: src/models/train.py
+      hash: md5
+      md5: d759865791984420c455f437ff193699
+      size: 6261
+    params:
+      params.yaml:
+        random_state: 42
+        validation_size: 0.2
+    outs:
+    - path: artifacts/reports/training_summary.json
+      hash: md5
+      md5: aca57075b8e82f2661f20960d34cd10f
+      size: 558
+  evaluate:
+    cmd: python -m src.models.evaluate
+    deps:
+    - path: artifacts/model/model.joblib
+      hash: md5
+      md5: fb79bd423a9b5588851213bc7fb132c8
+      size: 8474
+    - path: configs/config.yaml
+      hash: md5
+      md5: 891ae1fb99413ed11af2a3a4962eaad5
+      size: 229
+    - path: data/processed/test.csv
+      hash: md5
+      md5: ac020a37d10b95fa0d00b6d748866378
+      size: 178930
+    - path: src/models/evaluate.py
+      hash: md5
+      md5: 6b2ef15e9be5ab2c340ce14eb74e6470
+      size: 2613
+    outs:
+    - path: artifacts/reports/test_metrics.json
+      hash: md5
+      md5: 0b08fdbeadc7ad5bcdd1ac9fa4d90262
+      size: 169

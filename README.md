@@ -19,6 +19,27 @@ Place the IBM Telco Customer Churn CSV at `raw/dataset.csv`. Keep the raw data o
 
 Preprocessing, model training, test evaluation, the FastAPI backend, and the Streamlit frontend are implemented. Training selects the model by validation F1, logs MLflow runs to `mlflow.db`, and saves the fitted pipeline to `artifacts/model/model.joblib`.
 
+## DVC data and pipeline
+
+Install the DVC dependency separately, then initialize DVC and track the raw dataset:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements-dvc.txt
+dvc init
+dvc add raw/dataset.csv
+```
+
+Commit the generated `.dvc/`, `raw/dataset.csv.dvc`, and updated `.gitignore` files. Reproduce and inspect the pipeline with:
+
+```powershell
+dvc repro
+dvc status
+dvc dag
+dvc metrics show
+```
+
+`dvc.yaml` defines preprocessing, training, and test evaluation stages. `params.yaml` holds the split and validation settings; MLflow records each model candidate run and its metrics. The model artifact remains in Git for the Docker/EC2 deployment. Without a shared DVC remote, the dataset and DVC cache stay local; a shared project needs an S3 remote before another machine can reproduce preprocessing.
+
 ## Run the API
 
 Install dependencies, then start the backend from the project root:
