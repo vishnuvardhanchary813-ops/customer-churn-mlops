@@ -25,6 +25,7 @@ Install the DVC dependency separately, then initialize DVC and track the raw dat
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements-dvc.txt
+$env:DVC_SITE_CACHE_DIR = Join-Path (Get-Location).Path 'work\dvc-site-cache'
 dvc init
 dvc add raw/dataset.csv
 ```
